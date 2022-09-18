@@ -1,2 +1,3 @@
 # ruby_reverse_shell
-this project is unfinished
+
+My own spin on the infamous reverse shell. I have added some custom commands for me to use (hypothetically). 

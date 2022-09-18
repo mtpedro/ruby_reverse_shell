@@ -1,35 +1,20 @@
-require 'socket' #socket from std
+# Run: ruby server.rb, accepts incoming connections, aka attacker
 
-PORT = "3000";
+require 'socket'
 
-class Client 
-	def initialize(client)
-		@client = client	
-	end
+PORT = 3000;
 
-	def handle() #handles client connections
-		print("new client!\n");
+server = TCPServer.new(PORT);
 
-		loop do
-			print("$> ")
-			command = gets.to_s
-			@client.write(command)
-			out = @client.gets.chomp;
-			puts(out.to_s)
-		end
-		
-		@client.close()
-	end
+loop do
+	client = server.accept;
+
+	print(">> ");
+	command = gets.chomp;
+
+	client.puts(command); # send command to connected client
+
+	puts("#{client.read}\n");
+
+	client.close;
 end
-
-def start()
-	sock = TCPServer.new(PORT) # bind to PORT
-	puts("listening on port #{PORT.to_s}")
-	
-	loop do
-		client = Client.new(sock.accept) # creates client obj
-		client.handle()
-	end
-end
-
-start();
